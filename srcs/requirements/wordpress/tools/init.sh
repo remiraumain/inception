@@ -1,22 +1,34 @@
 #!/bin/bash
+set -e
 
-if [ ! -f "/var/www/html/wp-config.php" ]; then
-    mkdir -p /var/www/html
-    cd /var/www/html
+sleep 10
 
-    wget https://wordpress.org/latest.tar.gz
-    tar -xzf latest.tar.gz
-    mv wordpress/* .
-    rm -rf wordpress latest.tar.gz
+cd /var/www/wordpress
 
-    cp wp-config-sample.php wp-config.php
+if [ ! -f "wp-config.php" ]; then
+    wp core download --allow-root
 
-    sed -i "s/database_name_here/${MYSQL_DATABASE}/" wp-config.php
-    sed -i "s/username_here/${MYSQL_USER}/" wp-config.php
-    sed -i "s/password_here/${MYSQL_PASSWORD}/" wp-config.php
-    sed -i "s/localhost/${MYSQL_HOST}/" wp-config.php
+    wp config create \
+        --dbname=$MYSQL_DATABASE \
+        --dbuser=$MYSQL_USER \
+        --dbpass=$MYSQL_PASSWORD \
+        --dbhost=$MYSQL_HOST \
+        --allow-root
+    
+    wp core install \
+        --url=$DOMAIN_NAME \
+        --title=$SITE_TITLE \
+        --admin_user=$ADMIN_USER \
+        --admin_password=$ADMIN_PASSWORD \
+        --admin_email=$ADMIN_EMAIL \
+        --allow-root
 
-    chown -R www-data:www-data /var/www/html
+    wp user create $USER_LOGIN $USER_EMAIL \
+        --role=author \
+        --user_pass=$USER_PASSWORD \
+        --allow-root
 fi
+
+chown -R www-data:www-data /var/www/wordpress
 
 exec php-fpm7.4 -F
