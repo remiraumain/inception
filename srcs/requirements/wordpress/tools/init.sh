@@ -44,4 +44,4 @@ fi
 chown -R www-data:www-data /var/www/wordpress
 
 echo "[WordPress] Starting PHP-FPM..."
-exec php-fpm7.4 -F
+exec php-fpm8.2 -F

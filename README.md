@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by rraumain.*
+_This project has been created as part of the 42 curriculum by rraumain._
 
 ## Description
 
@@ -12,7 +12,7 @@ All services run in isolated containers, communicate through a dedicated Docker 
 
 ### Project description
 
-This project uses **Docker** to containerize each service into its own lightweight, isolated environment. Each container is built from a custom Dockerfile based on Debian Bullseye (penultimate stable).
+This project uses **Docker** to containerize each service into its own lightweight, isolated environment. Each container is built from a custom Dockerfile based on Debian bookworm (penultimate stable).
 
 **Virtual Machines vs Docker:**
 Virtual machines emulate full hardware and run a complete OS, consuming significant resources. Docker containers share the host kernel, making them faster to start, lighter on resources, and easier to reproduce. Docker is ideal for microservice architectures where each service is isolated but doesn't need a full OS.
@@ -42,6 +42,7 @@ Bind mounts map a host directory directly into a container, tightly coupling the
    - `credentials.txt` - WordPress admin and user credentials (shell variable format)
 
 2. Create `srcs/.env` with:
+
    ```
    DOMAIN_NAME=rraumain.42.fr
    SITE_TITLE=Inception
@@ -51,6 +52,7 @@ Bind mounts map a host directory directly into a container, tightly coupling the
    ```
 
 3. Build and start:
+
    ```bash
    make
    ```
@@ -59,13 +61,13 @@ Bind mounts map a host directory directly into a container, tightly coupling the
 
 ### Available commands
 
-| Command | Description |
-|---------|-------------|
-| `make` | Build and start all containers |
-| `make down` | Stop all containers |
-| `make clean` | Stop containers and prune Docker system |
+| Command       | Description                                    |
+| ------------- | ---------------------------------------------- |
+| `make`        | Build and start all containers                 |
+| `make down`   | Stop all containers                            |
+| `make clean`  | Stop containers and prune Docker system        |
 | `make fclean` | Full cleanup: remove data, volumes, and images |
-| `make re` | Full rebuild from scratch |
+| `make re`     | Full rebuild from scratch                      |
 
 ## Resources
 
